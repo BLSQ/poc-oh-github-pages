@@ -107,8 +107,14 @@ const LevelSelect = ({ level, onChange, filter }) => {
   const [options, setOptions] = useState();
   useEffect(() => {
     fetchPyramidLevel(level).then((opts) => {
-      setOptions(filter ? opts.data.filter(filter) : opts.data);
-      onChange(opts.data[0]);
+      const data = filter ? opts.data.filter(filter) : opts.data;
+      data.sort((a, b) => {
+        if (a.OU_NAME < b.OU_NAME) return -1;
+        if (a.OU_NAME > b.OU_NAME) return 1;
+        return 0;
+      });
+      setOptions(data.filter((a) => a.OU_NAME && a.OU_NAME != ""));
+      onChange(data[0]);
     });
   }, [level]);
   const onSelectChange = (e) => {
