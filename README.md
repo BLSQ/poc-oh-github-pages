@@ -9,6 +9,5 @@ bun run dev
 # deploy to gh
 
 ```
-bun vite build
-bun run deploy
+./script/release.sh
 ```
